@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
-import Navbar from '../../components/Navbar';
 import './Settings.css';
 
 interface UserData {
@@ -138,7 +137,6 @@ const Settings = () => {
     if (loading) {
         return (
             <div className="settings-page">
-                <Navbar />
                 <div className="settings-loading">
                     <div className="loading-spinner" />
                     <span>Loading settings...</span>
@@ -149,7 +147,6 @@ const Settings = () => {
 
     return (
         <div className="settings-page">
-            <Navbar />
             <div className="settings-grid-bg" />
 
             <main className="settings-main">

@@ -17,7 +17,14 @@ const patternEnum = [
     'stack',
     'bit manipulation',
     'matrix',
-    'prefix sum'
+    'prefix sum',
+    'sorting',
+    'linked list',
+    'recursion',
+    'math',
+    'hash table',
+    'queue',
+    'divide and conquer'
 ] as const;
 
 const supportedLanguages = [
@@ -313,7 +320,7 @@ export const listProblemsSchema = z.object({
             .transform(val => val === 'true'),
 
         sortBy: z
-            .enum(['title', 'difficulty', 'createdAt', 'acceptanceRate', 'likes'])
+            .enum(['title', 'difficulty', 'createdAt', 'submissionsCount', 'acceptedCount', 'acceptanceRate', 'likes'])
             .optional()
             .default('createdAt'),
 

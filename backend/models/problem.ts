@@ -10,7 +10,7 @@ const ProblemSchema = new Schema<IProblem>({
     pattern: [{
         type: String,
         trim: true,
-        enum: ['sliding window', 'two pointers', 'tree traversal', 'graph traversal', 'dynamic programming', 'backtracking', 'greedy', 'heap', 'binary search', 'stack', 'bit manipulation', 'matrix', 'prefix sum'],
+        enum: ['sliding window', 'two pointers', 'tree traversal', 'graph traversal', 'dynamic programming', 'backtracking', 'greedy', 'heap', 'binary search', 'stack', 'bit manipulation', 'matrix', 'prefix sum', 'sorting', 'linked list', 'recursion', 'math', 'hash table', 'queue', 'divide and conquer'],
         index: true
     }],
     visibleTestCases: [{

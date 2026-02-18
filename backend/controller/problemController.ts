@@ -416,9 +416,90 @@ export const getAllProblems = async (
         }
 
         // Sort
-        const allowedSortFields = ['title', 'difficulty', 'createdAt', 'submissionsCount', 'likes'];
-        const sortField = allowedSortFields.includes(getStringParam(sortBy)) ? getStringParam(sortBy) : 'createdAt';
-        const sort: Record<string, 1 | -1> = { [sortField]: sortOrder === 'asc' ? 1 : -1 };
+        const allowedSortFields = ['title', 'difficulty', 'createdAt', 'submissionsCount', 'acceptedCount', 'likes'];
+        const sortByParam = getStringParam(sortBy);
+        const sortOrderValue = sortOrder === 'asc' ? 1 : -1;
+        
+        // Use aggregation for acceptanceRate sorting, otherwise use regular query
+        if (sortByParam === 'acceptanceRate') {
+            // Build aggregation pipeline for acceptance rate sorting
+            const matchStage: Record<string, unknown> = { ...query };
+            
+            const pipeline: any[] = [
+                { $match: matchStage },
+                {
+                    $addFields: {
+                        computedAcceptanceRate: {
+                            $cond: {
+                                if: { $eq: ['$submissionsCount', 0] },
+                                then: 0,
+                                else: {
+                                    $multiply: [
+                                        { $divide: ['$acceptedCount', '$submissionsCount'] },
+                                        100
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                { $sort: { computedAcceptanceRate: sortOrderValue } },
+                { $skip: skip },
+                { $limit: sanitizedLimit },
+                {
+                    $project: {
+                        title: 1,
+                        difficulty: 1,
+                        topics: 1,
+                        companyTags: 1,
+                        pattern: 1,
+                        submissionsCount: 1,
+                        acceptedCount: 1,
+                        slug: 1,
+                        premium: 1,
+                        createdAt: 1
+                    }
+                }
+            ];
+
+            const [problems, total] = await Promise.all([
+                Problem.aggregate(pipeline),
+                Problem.countDocuments(query),
+            ]);
+
+            const solvedSubmissions = await Submission.find({
+                user: req.user._id,
+                problem: { $in: problems.map(p => p._id) },
+                status: 'Accepted',
+            }).distinct('problem');
+
+            const solvedIds = new Set(solvedSubmissions.map(id => id.toString()));
+
+            const problemsWithStatus: ProblemWithStatus[] = problems.map(problem => ({
+                ...problem,
+                isSolved: solvedIds.has(problem._id.toString()),
+                acceptanceRate: problem.submissionsCount > 0
+                    ? ((problem.acceptedCount / problem.submissionsCount) * 100).toFixed(1)
+                    : '0.0',
+            }));
+
+            const pagination: PaginationInfo = {
+                page: sanitizedPage,
+                limit: sanitizedLimit,
+                total,
+                pages: Math.ceil(total / sanitizedLimit),
+            };
+
+            sendResponse(res, 200, {
+                success: true,
+                data: { problems: problemsWithStatus, pagination },
+            });
+            return;
+        }
+        
+        // Regular sorting for non-acceptanceRate fields
+        const sortField = allowedSortFields.includes(sortByParam) ? sortByParam : 'createdAt';
+        const sort: Record<string, 1 | -1> = { [sortField]: sortOrderValue };
 
         const [problems, total] = await Promise.all([
             Problem.find(query)
@@ -712,6 +793,90 @@ export const generateMockProblems = async (
     }
 };
 
+/**
+ * @route   GET /api/problems/stats
+ * @desc    Get problem statistics (difficulty counts, topic counts)
+ * @access  Protected
+ */
+export const getProblemStats = async (
+    req: AuthenticatedRequest,
+    res: Response
+): Promise<void> => {
+    try {
+        if (!req.user) {
+            sendError(res, 401, 'Not authenticated');
+            return;
+        }
+
+        // Difficulty breakdown
+        const difficultyCounts = await Problem.aggregate([
+            { $group: { _id: '$difficulty', count: { $sum: 1 } } }
+        ]);
+
+        const difficultyMap: Record<string, number> = { easy: 0, medium: 0, hard: 0 };
+        difficultyCounts.forEach((d: { _id: string; count: number }) => {
+            difficultyMap[d._id] = d.count;
+        });
+
+        const total = await Problem.countDocuments();
+
+        // Company breakdown
+        const companyCounts = await Problem.aggregate([
+            { $unwind: '$companyTags' },
+            { $group: { _id: '$companyTags', count: { $sum: 1 } } },
+            { $sort: { count: -1 } },
+            { $limit: 20 }
+        ]);
+
+        // Pattern breakdown
+        const patternCounts = await Problem.aggregate([
+            { $unwind: '$pattern' },
+            { $group: { _id: '$pattern', count: { $sum: 1 } } },
+            { $sort: { count: -1 } },
+            { $limit: 20 }
+        ]);
+
+        // Topic breakdown (unwind topics array, count each)
+        const topicCounts = await Problem.aggregate([
+            { $unwind: '$topics' },
+            { $group: { _id: '$topics', count: { $sum: 1 } } },
+            { $sort: { count: -1 } },
+            { $limit: 20 }
+        ]);
+
+        // User solved count
+        const solvedCount = await Submission.distinct('problem', {
+            user: req.user._id,
+            status: 'Accepted',
+        });
+
+        sendResponse(res, 200, {
+            success: true,
+            data: {
+                total,
+                easy: difficultyMap.easy,
+                medium: difficultyMap.medium,
+                hard: difficultyMap.hard,
+                solved: solvedCount.length,
+                topics: topicCounts.map((t: { _id: string; count: number }) => ({
+                    name: t._id,
+                    count: t.count,
+                })),
+                companies: companyCounts.map((t: { _id: string; count: number }) => ({
+                    name: t._id,
+                    count: t.count,
+                })),
+                patterns: patternCounts.map((t: { _id: string; count: number }) => ({
+                    name: t._id,
+                    count: t.count,
+                })),
+            },
+        });
+    } catch (error) {
+        handleError(error, res, 'getProblemStats');
+    }
+};
+
 // ==================== EXPORTS ====================
 
 export default {
@@ -724,4 +889,5 @@ export default {
     getSubmissions,
     getProblemsByCompany,
     generateMockProblems,
+    getProblemStats,
 };

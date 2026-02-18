@@ -36,7 +36,8 @@ lerna-debug.log*
 *.njsproj
 *.sln
 *.sw?
-
+*.md
+!README.md
 # OS files
 Thumbs.db
 .DS_Store

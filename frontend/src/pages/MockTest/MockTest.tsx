@@ -2,7 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
-import Navbar from '../../components/Navbar';
+import { Rows4, Grid3x3, Ruler } from 'lucide-react';
+import { PiBuildings, PiGraph } from 'react-icons/pi';
+import { IoExtensionPuzzleOutline } from 'react-icons/io5';
+import { CiViewTable } from 'react-icons/ci';
+import { HiArrowsRightLeft, HiOutlineSquare3Stack3D } from 'react-icons/hi2';
+import { GrMicrofocus } from 'react-icons/gr';
+import { MdManageSearch } from 'react-icons/md';
+import { TfiLink } from 'react-icons/tfi';
+import { TbBinaryTree, TbArrowBackUp, TbGeometry } from 'react-icons/tb';
+import { GoGitBranch } from 'react-icons/go';
+import { BiDollar, BiMath } from 'react-icons/bi';
 import './MockTest.css';
 
 // Company logos as SVG components
@@ -21,7 +31,7 @@ const CompanyLogos: Record<string, React.ReactNode> = {
         </svg>
     ),
     amazon: (
-        <svg viewBox="0 0 24 24" className="company-logo">
+        <svg viewBox="0 0 24 24" className="company-logo" preserveAspectRatio="xMidYMid meet">
             <path fill="#FF9900" d="M.045 18.02c.072-.116.187-.124.348-.022 3.636 2.11 7.594 3.166 11.87 3.166 2.852 0 5.668-.533 8.447-1.595l.315-.14c.138-.06.234-.1.293-.13.226-.088.39-.046.493.126.112.18.032.36-.238.54-.336.21-.72.422-1.15.634-2.478 1.22-5.15 1.83-8.02 1.83-4.548 0-8.624-1.393-12.23-4.18-.154-.117-.18-.27-.128-.46zm10.196-3.353c-.196-.37-.47-.637-.82-.804-.35-.167-.805-.25-1.36-.25-.12 0-.32.018-.6.055l-.18.028c-.16.02-.32.038-.48.056-.09 0-.18-.014-.27-.042-.1-.027-.18-.07-.25-.126-.12-.09-.18-.206-.18-.346 0-.23.14-.39.42-.48.28-.092.66-.136 1.14-.136.78 0 1.39.134 1.83.4.44.27.77.706.99 1.31l.45 1.23c.18.47.4.85.65 1.13.25.28.55.46.91.54.35.08.78.12 1.28.12.3 0 .62-.03.96-.09l.42-.07c.37-.056.58-.012.63.136v.01c.01.11-.1.23-.34.36-.23.13-.56.24-.99.33-.42.09-.85.136-1.27.136-.66 0-1.24-.077-1.74-.23-.5-.154-.93-.39-1.29-.71-.36-.32-.65-.72-.88-1.2l-.52-1.12z" />
             <path fill="#FF9900" d="M13.574 9.198c0-1.18-.353-2.128-1.058-2.848-.706-.72-1.69-1.08-2.95-1.08-1.26 0-2.26.377-3 1.13-.74.754-1.11 1.762-1.11 3.024 0 1.155.33 2.074.987 2.76.66.686 1.53 1.03 2.61 1.03.52 0 1.01-.077 1.48-.23.46-.153.88-.383 1.25-.69.36-.306.65-.66.87-1.06.22-.4.38-.83.49-1.29l.03-.15c.04-.2.03-.37-.03-.51-.07-.14-.2-.21-.39-.21h-3.96c-.3 0-.45-.15-.45-.44 0-.3.15-.44.45-.44h5c.2 0 .36.05.48.15.12.1.19.24.21.42v.16c-.02.22-.07.5-.15.83z" />
         </svg>
@@ -45,12 +55,12 @@ const CompanyLogos: Record<string, React.ReactNode> = {
         </svg>
     ),
     uber: (
-        <svg viewBox="0 0 24 24" className="company-logo">
+        <svg viewBox="0 0 24 24" className="company-logo" preserveAspectRatio="xMidYMid meet">
             <path fill="#fff" d="M0 7.97v4.958c0 1.867 1.302 3.101 3 3.101.826 0 1.562-.316 2.094-.87v.736H6.27V7.97H5.094v4.684c0 1.27-.807 2.119-1.925 2.119-1.088 0-1.891-.822-1.891-2.119V7.97zm17.05 0v4.958c0 1.867 1.302 3.101 2.999 3.101.826 0 1.563-.316 2.095-.87v.736H23.32V7.97h-1.176v4.684c0 1.27-.807 2.119-1.925 2.119-1.088 0-1.892-.822-1.892-2.119V7.97zM6.93 7.97h1.177v.78c.453-.591 1.132-.913 1.96-.913 1.603 0 2.762 1.254 2.762 2.997 0 1.744-1.159 2.998-2.762 2.998-.828 0-1.507-.322-1.96-.913v3.22H6.93zm3.986 2.878c0-1.088-.855-1.894-1.938-1.894-1.084 0-1.938.806-1.938 1.894 0 1.087.854 1.894 1.938 1.894 1.083 0 1.938-.807 1.938-1.894zm3.318-2.878h1.177v.69c.372-.498.939-.823 1.702-.823 1.343 0 2.267.963 2.267 2.454v3.604H18.2v-3.33c0-.975-.554-1.6-1.446-1.6-.932 0-1.519.665-1.519 1.6v3.33h-1.177z" />
         </svg>
     ),
     airbnb: (
-        <svg viewBox="0 0 24 24" className="company-logo">
+        <svg viewBox="0 0 24 24" className="company-logo" preserveAspectRatio="xMidYMid meet">
             <path fill="#FF5A5F" d="M12.001 18.275c-.238-.344-.47-.695-.69-1.052-1.092-1.77-2.088-3.624-2.74-5.61-.192-.607-.334-1.21-.392-1.812-.082-.847.058-1.622.496-2.326.532-.86 1.323-1.376 2.32-1.576.812-.163 1.586-.074 2.298.347.82.484 1.348 1.193 1.544 2.133.138.663.082 1.32-.092 1.968-.328 1.22-.85 2.365-1.444 3.478-.67 1.254-1.424 2.456-2.23 3.627-.236.326-.48.645-.734.96-.108.138-.217.274-.336.413l-.002-.002zm-.003-1.156c.064-.09.127-.18.19-.27l.075-.11c.78-1.12 1.51-2.27 2.15-3.477.54-1.01 1.023-2.047 1.324-3.154.15-.554.21-1.114.12-1.68-.138-.87-.553-1.57-1.27-2.06-.6-.412-1.27-.56-2-.474-.87.103-1.58.48-2.1 1.186-.406.55-.573 1.167-.5 1.835.056.528.186 1.04.36 1.544.59 1.715 1.472 3.313 2.45 4.86.21.34.43.676.66 1.006.18.26.362.522.54.793l.003.003v-.002zm.003-7.792c-.702 0-1.297.576-1.297 1.295 0 .7.577 1.28 1.283 1.294.712.013 1.307-.57 1.31-1.287.003-.707-.587-1.302-1.296-1.302zM12 0C5.373 0 0 5.372 0 12c0 6.627 5.373 12 12 12s12-5.373 12-12c0-6.628-5.373-12-12-12zm5.753 17.74c-.06.096-.195.207-.42.358-.503.34-1.157.656-1.908.924-1.643.587-3.452.88-5.425.88s-3.783-.293-5.426-.88c-.75-.268-1.404-.585-1.907-.924-.225-.15-.36-.262-.42-.357l-.003-.004c-.03-.046-.045-.097-.045-.158 0-.09.032-.17.08-.238.89-1.2 1.727-2.44 2.48-3.735.703-1.207 1.326-2.47 1.79-3.8.162-.465.292-.943.36-1.43.085-.603.06-1.185-.088-1.748-.264-.998-.82-1.796-1.647-2.385-.87-.62-1.857-.87-2.95-.7-1.15.18-2.07.703-2.73 1.6-.598.81-.86 1.73-.77 2.747.07.73.265 1.43.53 2.11.676 1.73 1.616 3.322 2.613 4.87.467.723.96 1.432 1.477 2.125.122.162.245.323.37.483l.025.03c.15.193.302.385.456.575.37.458.752.907 1.15 1.342.197.214.397.424.6.63.025.024.104.1.142.136l.012.013.004.004c.182.175.42.262.66.262.162 0 .326-.042.477-.127l.005-.002c.1-.06.192-.133.274-.218l.082-.09.08-.087c.396-.426.777-.87 1.145-1.323.153-.19.305-.38.455-.574l.027-.035c.125-.16.248-.32.37-.482.515-.688 1.01-1.394 1.476-2.117.996-1.546 1.937-3.138 2.613-4.868.264-.678.46-1.375.53-2.106.09-1.02-.172-1.94-.77-2.748-.66-.897-1.58-1.42-2.728-1.6-1.094-.17-2.083.08-2.952.7-.828.59-1.385 1.388-1.648 2.386-.148.564-.173 1.146-.088 1.75.068.487.198.964.36 1.43.464 1.33 1.087 2.593 1.79 3.8.753 1.294 1.59 2.535 2.48 3.735.048.07.08.15.08.24 0 .06-.014.11-.045.156l-.003.004-.002.004z" />
         </svg>
     ),
@@ -94,22 +104,22 @@ const COMPANIES = [
 
 // DSA Patterns
 const PATTERNS = [
-    { id: 'arrays', name: 'Arrays & Hashing', icon: '📊', color: '#2ecc71', problems: 156 },
-    { id: 'two-pointers', name: 'Two Pointers', icon: '👆', color: '#3498db', problems: 89 },
-    { id: 'sliding-window', name: 'Sliding Window', icon: '🪟', color: '#9b59b6', problems: 67 },
-    { id: 'stack', name: 'Stack', icon: '📚', color: '#e74c3c', problems: 78 },
-    { id: 'binary-search', name: 'Binary Search', icon: '🔎', color: '#f39c12', problems: 92 },
-    { id: 'linked-list', name: 'Linked List', icon: '🔗', color: '#1abc9c', problems: 84 },
-    { id: 'trees', name: 'Trees', icon: '🌳', color: '#27ae60', problems: 145 },
-    { id: 'tries', name: 'Tries', icon: '🔤', color: '#8e44ad', problems: 34 },
-    { id: 'heap', name: 'Heap / Priority Queue', icon: '⛰️', color: '#e67e22', problems: 56 },
-    { id: 'backtracking', name: 'Backtracking', icon: '↩️', color: '#c0392b', problems: 67 },
-    { id: 'graphs', name: 'Graphs', icon: '🕸️', color: '#2980b9', problems: 123 },
-    { id: 'dp', name: 'Dynamic Programming', icon: '🧮', color: '#d35400', problems: 198 },
-    { id: 'greedy', name: 'Greedy', icon: '💰', color: '#16a085', problems: 87 },
-    { id: 'intervals', name: 'Intervals', icon: '📅', color: '#7f8c8d', problems: 45 },
-    { id: 'math', name: 'Math & Geometry', icon: '📐', color: '#34495e', problems: 76 },
-    { id: 'bit', name: 'Bit Manipulation', icon: '🔢', color: '#95a5a6', problems: 42 },
+    { id: 'arrays', name: 'Arrays & Hashing', icon: <CiViewTable />, color: '#2ecc71', problems: 156 },
+    { id: 'two-pointers', name: 'Two Pointers', icon: <HiArrowsRightLeft />, color: '#3498db', problems: 89 },
+    { id: 'sliding-window', name: 'Sliding Window', icon: <GrMicrofocus />, color: '#9b59b6', problems: 67 },
+    { id: 'stack', name: 'Stack', icon: <HiOutlineSquare3Stack3D />, color: '#e74c3c', problems: 78 },
+    { id: 'binary-search', name: 'Binary Search', icon: <MdManageSearch />, color: '#f39c12', problems: 92 },
+    { id: 'linked-list', name: 'Linked List', icon: <TfiLink />, color: '#1abc9c', problems: 84 },
+    { id: 'trees', name: 'Trees', icon: <TbBinaryTree />, color: '#27ae60', problems: 145 },
+    { id: 'tries', name: 'Tries', icon: <GoGitBranch />, color: '#8e44ad', problems: 34 },
+    { id: 'heap', name: 'Heap / Priority Queue', icon: <Rows4 />, color: '#e67e22', problems: 56 },
+    { id: 'backtracking', name: 'Backtracking', icon: <TbArrowBackUp />, color: '#c0392b', problems: 67 },
+    { id: 'graphs', name: 'Graphs', icon: <PiGraph />, color: '#2980b9', problems: 123 },
+    { id: 'dp', name: 'Dynamic Programming', icon: <Grid3x3 />, color: '#d35400', problems: 198 },
+    { id: 'greedy', name: 'Greedy', icon: <BiDollar />, color: '#16a085', problems: 87 },
+    { id: 'intervals', name: 'Intervals', icon: <Ruler />, color: '#7f8c8d', problems: 45 },
+    { id: 'math', name: 'Math & Geometry', icon: <BiMath />, color: '#34495e', problems: 76 },
+    { id: 'bit', name: 'Bit Manipulation', icon: <TbGeometry />, color: '#95a5a6', problems: 42 },
 ];
 
 type TabType = 'company' | 'pattern';
@@ -196,7 +206,6 @@ const MockTest = () => {
 
     return (
         <div className="mocktest-page">
-            <Navbar />
             <div className="mocktest-grid-bg" />
 
             <main className="mocktest-main">
@@ -259,14 +268,14 @@ const MockTest = () => {
                                 className={`tab-btn ${activeTab === 'company' ? 'active' : ''}`}
                                 onClick={() => setActiveTab('company')}
                             >
-                                <span className="tab-icon">🏢</span>
+                                <span className="tab-icon"><PiBuildings /></span>
                                 Company-wise
                             </button>
                             <button
                                 className={`tab-btn ${activeTab === 'pattern' ? 'active' : ''}`}
                                 onClick={() => setActiveTab('pattern')}
                             >
-                                <span className="tab-icon">🧩</span>
+                                <span className="tab-icon"><IoExtensionPuzzleOutline /></span>
                                 Pattern-wise
                             </button>
                             <div

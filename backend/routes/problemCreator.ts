@@ -4,7 +4,7 @@ import {
     createProblemSchema,
     updateProblemSchema,
     getProblemSchema,
-    listProblemsSchema, 
+    listProblemsSchema,
     deleteProblemSchema,
 } from '../validator';
 import {
@@ -17,6 +17,7 @@ import {
     getSubmissions,
     getProblemsByCompany,
     generateMockProblems,
+    getProblemStats,
 } from '../controller/problemController';
 
 const problemRouter: express.Router = express.Router();
@@ -30,22 +31,25 @@ problemRouter.get('/health', (_req, res) => {
 
 problemRouter.get('/user/solved', protect, validate(listProblemsSchema), getSolvedProblems);
 
+// Get problem stats (difficulty counts, topic counts)
+problemRouter.get('/stats', protect, getProblemStats);
+
 problemRouter.post('/generate-mock', protect, submissionLimiter, generateMockProblems);
 
 
 problemRouter.get('/company/:company', protect, getProblemsByCompany);
 
 
-problemRouter.post('/',protect,adminOnly,validate(createProblemSchema),createProblem );
+problemRouter.post('/', protect, adminOnly, validate(createProblemSchema), createProblem);
 
 // Update problem - Admin only
-problemRouter.put('/:id',protect,adminOnly,validate(updateProblemSchema),updateProblem);
+problemRouter.put('/:id', protect, adminOnly, validate(updateProblemSchema), updateProblem);
 
 // PATCH also supported for partial updates
-problemRouter.patch('/:id',protect,adminOnly,validate(updateProblemSchema),updateProblem);
+problemRouter.patch('/:id', protect, adminOnly, validate(updateProblemSchema), updateProblem);
 
 // Delete problem - Admin only
-problemRouter.delete('/:id',protect,adminOnly,validate(deleteProblemSchema),deleteProblem);
+problemRouter.delete('/:id', protect, adminOnly, validate(deleteProblemSchema), deleteProblem);
 
 
 // Get all problems with filtering & pagination

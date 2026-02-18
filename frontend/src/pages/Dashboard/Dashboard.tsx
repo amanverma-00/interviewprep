@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Navbar from '../../components/Navbar';
 import './Dashboard.css';
 
 interface UserData {
@@ -77,7 +76,6 @@ const Dashboard = () => {
     if (loading) {
         return (
             <div className="dashboard-page">
-                <Navbar />
                 <div className="dashboard-loading">
                     <div className="loading-spinner" />
                     <span>Loading your dashboard...</span>
@@ -88,7 +86,6 @@ const Dashboard = () => {
 
     return (
         <div className="dashboard-page">
-            <Navbar />
             <div className="dashboard-grid-bg" />
 
             <main className="dashboard-main">
@@ -97,7 +94,7 @@ const Dashboard = () => {
                     <section className="welcome-section">
                         <div className="welcome-content">
                             <span className="welcome-badge">
-                                
+
                             </span>
                             <h1 className="welcome-title">
                                 {getGreeting()}, <span className="text-highlight">{user?.name?.split(' ')[0] || 'Developer'}</span>

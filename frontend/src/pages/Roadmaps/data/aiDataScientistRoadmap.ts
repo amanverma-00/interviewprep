@@ -1,0 +1,394 @@
+import type { Topic, RoadmapSection } from './frontendRoadmap';
+
+// ─── AI & Data Scientist Topics ──────────────────────────────────
+export const AI_DATA_SCIENTIST_TOPICS: Record<string, Topic> = {
+    // ── Mathematics ──
+    'linear-algebra': {
+        id: 'linear-algebra',
+        title: 'Linear Algebra',
+        description: 'Vectors, matrices, eigenvalues, eigenvectors, SVD, and matrix decompositions. The mathematical language of machine learning — every algorithm relies on linear algebra.',
+        resources: [
+            { type: 'course', title: 'Linear Algebra (3Blue1Brown)', url: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab' },
+            { type: 'course', title: 'MIT Linear Algebra', url: 'https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/' },
+        ],
+    },
+    calculus: {
+        id: 'calculus',
+        title: 'Calculus',
+        description: 'Derivatives, gradients, chain rule, partial derivatives, and optimization. Gradient descent — the core of training neural networks — is fundamentally calculus.',
+        resources: [
+            { type: 'course', title: 'Calculus (3Blue1Brown)', url: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr' },
+        ],
+    },
+    'probability-stats': {
+        id: 'probability-stats',
+        title: 'Probability & Statistics',
+        description: 'Probability distributions, Bayes\' theorem, hypothesis testing, confidence intervals, p-values, maximum likelihood estimation, and statistical inference.',
+        resources: [
+            { type: 'course', title: 'Statistics & Probability (Khan Academy)', url: 'https://www.khanacademy.org/math/statistics-probability' },
+            { type: 'video', title: 'Statistics Fundamentals (StatQuest)', url: 'https://www.youtube.com/playlist?list=PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9' },
+        ],
+    },
+
+    // ── Programming ──
+    python: {
+        id: 'python',
+        title: 'Python',
+        description: 'Python is the primary language for data science and AI. NumPy, Pandas, Matplotlib, Scikit-learn, and deep learning frameworks are all Python-first.',
+        resources: [
+            { type: 'roadmap', title: 'Visit the Python Roadmap', url: 'https://roadmap.sh/python' },
+            { type: 'video', title: 'Python for Data Science', url: 'https://www.youtube.com/watch?v=LHBE6Q9XlzI' },
+        ],
+    },
+    'r-language': {
+        id: 'r-language',
+        title: 'R',
+        description: 'R is a language built for statistical computing and data visualization. ggplot2, dplyr, tidyr, and caret. Popular in academia and biostatistics.',
+        resources: [
+            { type: 'official', title: 'R Documentation', url: 'https://www.r-project.org/about.html' },
+            { type: 'course', title: 'R for Data Science (Free Book)', url: 'https://r4ds.had.co.nz/' },
+        ],
+    },
+    numpy: {
+        id: 'numpy',
+        title: 'NumPy',
+        description: 'NumPy provides fast numerical computing with n-dimensional arrays. Array operations, broadcasting, linear algebra, and random number generation.',
+        resources: [
+            { type: 'official', title: 'NumPy Documentation', url: 'https://numpy.org/doc/' },
+        ],
+    },
+    pandas: {
+        id: 'pandas',
+        title: 'Pandas',
+        description: 'Pandas is the core library for data manipulation. DataFrames, groupby, merge, pivot tables, time series, and data cleaning operations.',
+        resources: [
+            { type: 'official', title: 'Pandas Documentation', url: 'https://pandas.pydata.org/docs/' },
+            { type: 'video', title: 'Pandas Tutorial', url: 'https://www.youtube.com/watch?v=vmEHCJofslg' },
+        ],
+    },
+
+    // ── Data Processing ──
+    'data-cleaning': {
+        id: 'data-cleaning',
+        title: 'Data Cleaning & Preprocessing',
+        description: 'Handling missing values, outliers, duplicates, encoding categorical variables, normalization, standardization, and feature scaling.',
+        resources: [
+            { type: 'article', title: 'Data Cleaning with Python', url: 'https://realpython.com/python-data-cleaning-numpy-pandas/' },
+        ],
+    },
+    'feature-engineering': {
+        id: 'feature-engineering',
+        title: 'Feature Engineering',
+        description: 'Creating meaningful features from raw data. Binning, encoding, polynomial features, interaction features, text features, and domain-specific transformations.',
+        resources: [
+            { type: 'article', title: 'Feature Engineering Guide', url: 'https://www.kaggle.com/learn/feature-engineering' },
+        ],
+    },
+    'eda': {
+        id: 'eda',
+        title: 'Exploratory Data Analysis',
+        description: 'EDA uses visualizations and statistics to understand data patterns, distributions, correlations, and anomalies before modeling. The most critical step in any project.',
+        resources: [
+            { type: 'video', title: 'EDA with Python', url: 'https://www.youtube.com/watch?v=fHFOANOPMng' },
+        ],
+    },
+
+    // ── Visualization ──
+    matplotlib: {
+        id: 'matplotlib',
+        title: 'Matplotlib',
+        description: 'Matplotlib is Python\'s foundational plotting library. Line plots, scatter plots, histograms, bar charts, subplots, and publication-quality figures.',
+        resources: [
+            { type: 'official', title: 'Matplotlib Documentation', url: 'https://matplotlib.org/stable/contents.html' },
+        ],
+    },
+    seaborn: {
+        id: 'seaborn',
+        title: 'Seaborn',
+        description: 'Seaborn provides statistical visualizations with beautiful defaults. Heatmaps, pair plots, distribution plots, and categorical data visualization.',
+        resources: [
+            { type: 'official', title: 'Seaborn Documentation', url: 'https://seaborn.pydata.org/' },
+        ],
+    },
+
+    // ── Machine Learning ──
+    'supervised-learning': {
+        id: 'supervised-learning',
+        title: 'Supervised Learning',
+        description: 'Learning from labeled data. Linear/logistic regression, decision trees, random forests, SVM, KNN, gradient boosting (XGBoost, LightGBM), and ensemble methods.',
+        resources: [
+            { type: 'course', title: 'Machine Learning (Andrew Ng)', url: 'https://www.coursera.org/learn/machine-learning' },
+            { type: 'video', title: 'ML Algorithms Explained', url: 'https://www.youtube.com/watch?v=E0Hmnixke2g' },
+        ],
+    },
+    'unsupervised-learning': {
+        id: 'unsupervised-learning',
+        title: 'Unsupervised Learning',
+        description: 'Learning without labels. K-means clustering, hierarchical clustering, DBSCAN, PCA, t-SNE, UMAP, anomaly detection, and association rules.',
+        resources: [
+            { type: 'video', title: 'Unsupervised Learning Explained', url: 'https://www.youtube.com/watch?v=jAA2g9ItoAc' },
+        ],
+    },
+    'model-evaluation': {
+        id: 'model-evaluation',
+        title: 'Model Evaluation',
+        description: 'Accuracy, precision, recall, F1, ROC-AUC, confusion matrix, cross-validation, bias-variance tradeoff, and hyperparameter tuning (GridSearch, RandomSearch, Optuna).',
+        resources: [
+            { type: 'article', title: 'Evaluation Metrics (scikit-learn)', url: 'https://scikit-learn.org/stable/modules/model_evaluation.html' },
+            { type: 'video', title: 'Model Evaluation (StatQuest)', url: 'https://www.youtube.com/watch?v=Kdsp6soqA7o' },
+        ],
+    },
+    'scikit-learn': {
+        id: 'scikit-learn',
+        title: 'Scikit-learn',
+        description: 'Scikit-learn is the standard ML library for Python. Consistent API for classification, regression, clustering, preprocessing, and model selection.',
+        resources: [
+            { type: 'official', title: 'Scikit-learn Documentation', url: 'https://scikit-learn.org/stable/' },
+            { type: 'video', title: 'Scikit-learn Tutorial', url: 'https://www.youtube.com/watch?v=0B5eIE_1vpU' },
+        ],
+    },
+
+    // ── Deep Learning ──
+    'neural-networks': {
+        id: 'neural-networks',
+        title: 'Neural Networks',
+        description: 'Neurons, layers, activation functions (ReLU, sigmoid, softmax), forward/backpropagation, loss functions, and gradient descent. The building blocks of deep learning.',
+        resources: [
+            { type: 'course', title: 'Neural Networks (3Blue1Brown)', url: 'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi' },
+            { type: 'course', title: 'Deep Learning Specialization (Andrew Ng)', url: 'https://www.coursera.org/specializations/deep-learning' },
+        ],
+    },
+    cnn: {
+        id: 'cnn',
+        title: 'CNNs (Convolutional Neural Networks)',
+        description: 'CNNs excel at image processing. Convolution layers, pooling, feature maps, transfer learning, and architectures like ResNet, VGG, and EfficientNet.',
+        resources: [
+            { type: 'video', title: 'CNN Explained', url: 'https://www.youtube.com/watch?v=YRhxdVk_sIs' },
+        ],
+    },
+    rnn: {
+        id: 'rnn',
+        title: 'RNNs & LSTMs',
+        description: 'Recurrent Neural Networks process sequential data. LSTMs and GRUs solve the vanishing gradient problem. Used for time series, NLP (before transformers), and speech.',
+        resources: [
+            { type: 'article', title: 'Understanding LSTMs', url: 'https://colah.github.io/posts/2015-08-Understanding-LSTMs/' },
+        ],
+    },
+    transformers: {
+        id: 'transformers',
+        title: 'Transformers',
+        description: 'The transformer architecture (attention mechanism) powers modern NLP and vision models. GPT, BERT, T5, Vision Transformers (ViT), and multi-modal models.',
+        resources: [
+            { type: 'article', title: 'The Illustrated Transformer', url: 'https://jalammar.github.io/illustrated-transformer/' },
+            { type: 'article', title: 'Attention Is All You Need', url: 'https://arxiv.org/abs/1706.03762' },
+        ],
+    },
+    pytorch: {
+        id: 'pytorch',
+        title: 'PyTorch',
+        description: 'PyTorch is the most popular deep learning framework. Dynamic computation graphs, autograd, nn.Module, DataLoader, and seamless GPU acceleration.',
+        resources: [
+            { type: 'official', title: 'PyTorch Documentation', url: 'https://pytorch.org/docs/stable/' },
+            { type: 'video', title: 'PyTorch Full Course', url: 'https://www.youtube.com/watch?v=V_xro1bcAuA' },
+        ],
+    },
+    tensorflow: {
+        id: 'tensorflow',
+        title: 'TensorFlow / Keras',
+        description: 'TensorFlow is Google\'s deep learning framework. Keras provides a high-level API. TFLite for mobile, TF Serving for deployment, and TensorBoard for visualization.',
+        resources: [
+            { type: 'official', title: 'TensorFlow Documentation', url: 'https://www.tensorflow.org/learn' },
+        ],
+    },
+
+    // ── NLP ──
+    nlp: {
+        id: 'nlp',
+        title: 'Natural Language Processing',
+        description: 'NLP enables machines to understand and generate human language. Tokenization, word embeddings, named entity recognition, sentiment analysis, and text classification.',
+        resources: [
+            { type: 'course', title: 'NLP Course (Hugging Face)', url: 'https://huggingface.co/learn/nlp-course/chapter1/1' },
+            { type: 'video', title: 'NLP Full Course', url: 'https://www.youtube.com/watch?v=fNxaJsNG3-s' },
+        ],
+    },
+    'huggingface': {
+        id: 'huggingface',
+        title: 'Hugging Face',
+        description: 'Hugging Face is the platform for ML models, datasets, and spaces. Transformers library, model hub, tokenizers, and the de facto standard for sharing models.',
+        resources: [
+            { type: 'official', title: 'Hugging Face Documentation', url: 'https://huggingface.co/docs' },
+        ],
+    },
+
+    // ── Computer Vision ──
+    'computer-vision': {
+        id: 'computer-vision',
+        title: 'Computer Vision',
+        description: 'Computer vision enables machines to interpret images and video. Object detection (YOLO, SSD), image segmentation, pose estimation, and generative models.',
+        resources: [
+            { type: 'course', title: 'CS231n (Stanford)', url: 'https://cs231n.stanford.edu/' },
+            { type: 'video', title: 'Computer Vision Course', url: 'https://www.youtube.com/watch?v=01sAkU_NvOY' },
+        ],
+    },
+
+    // ── MLOps ──
+    mlflow: {
+        id: 'mlflow',
+        title: 'MLflow',
+        description: 'MLflow manages the ML lifecycle — experiment tracking, model registry, model serving, and reproducibility. The most popular open-source MLOps platform.',
+        resources: [
+            { type: 'official', title: 'MLflow Documentation', url: 'https://mlflow.org/docs/latest/index.html' },
+        ],
+    },
+    'wandb': {
+        id: 'wandb',
+        title: 'Weights & Biases',
+        description: 'W&B provides experiment tracking, dataset versioning, model monitoring, and collaborative ML development. Beautiful dashboards for comparing runs.',
+        resources: [
+            { type: 'official', title: 'W&B Documentation', url: 'https://docs.wandb.ai/' },
+        ],
+    },
+    'model-deployment': {
+        id: 'model-deployment',
+        title: 'Model Deployment',
+        description: 'Deploying ML models to production: Flask/FastAPI APIs, Docker containers, cloud endpoints (SageMaker, Vertex AI), model optimization, and A/B testing.',
+        resources: [
+            { type: 'article', title: 'ML Deployment Guide', url: 'https://neptune.ai/blog/how-to-serve-machine-learning-models' },
+        ],
+    },
+
+    // ── Cloud & Big Data ──
+    'cloud-ml': {
+        id: 'cloud-ml',
+        title: 'Cloud ML Platforms',
+        description: 'AWS SageMaker, Google Vertex AI, and Azure ML provide managed infrastructure for training, deploying, and monitoring ML models at scale.',
+        resources: [
+            { type: 'official', title: 'AWS SageMaker', url: 'https://docs.aws.amazon.com/sagemaker/' },
+            { type: 'official', title: 'Google Vertex AI', url: 'https://cloud.google.com/vertex-ai/docs' },
+        ],
+    },
+    spark: {
+        id: 'spark',
+        title: 'Apache Spark / PySpark',
+        description: 'Spark processes massive datasets in distributed environments. PySpark enables Python-based big data processing, ML pipelines (MLlib), and real-time streaming.',
+        resources: [
+            { type: 'official', title: 'Spark Documentation', url: 'https://spark.apache.org/docs/latest/' },
+            { type: 'video', title: 'PySpark Tutorial', url: 'https://www.youtube.com/watch?v=_C8kWso4ne4' },
+        ],
+    },
+};
+
+// ─── AI & Data Scientist Sections ────────────────────────────────
+export const AI_DATA_SCIENTIST_SECTIONS: RoadmapSection[] = [
+    {
+        id: 'math',
+        title: 'Mathematics',
+        description: 'The foundation',
+        leftTopics: [
+            { id: 'linear-algebra', title: 'Linear Algebra' },
+            { id: 'calculus', title: 'Calculus' },
+        ],
+        rightTopics: [
+            { id: 'probability-stats', title: 'Probability & Statistics' },
+        ],
+    },
+    {
+        id: 'programming',
+        title: 'Programming',
+        leftTopics: [
+            { id: 'python', title: 'Python' },
+            { id: 'r-language', title: 'R' },
+        ],
+        rightTopics: [
+            { id: 'numpy', title: 'NumPy' },
+            { id: 'pandas', title: 'Pandas' },
+        ],
+    },
+    {
+        id: 'data-processing',
+        title: 'Data Processing',
+        leftTopics: [
+            { id: 'data-cleaning', title: 'Data Cleaning' },
+            { id: 'feature-engineering', title: 'Feature Engineering' },
+        ],
+        rightTopics: [
+            { id: 'eda', title: 'Exploratory Data Analysis' },
+        ],
+    },
+    {
+        id: 'visualization',
+        title: 'Visualization',
+        leftTopics: [
+            { id: 'matplotlib', title: 'Matplotlib' },
+        ],
+        rightTopics: [
+            { id: 'seaborn', title: 'Seaborn' },
+        ],
+    },
+    {
+        id: 'machine-learning',
+        title: 'Machine Learning',
+        leftTopics: [
+            { id: 'supervised-learning', title: 'Supervised Learning' },
+            { id: 'unsupervised-learning', title: 'Unsupervised Learning' },
+        ],
+        rightTopics: [
+            { id: 'model-evaluation', title: 'Model Evaluation' },
+            { id: 'scikit-learn', title: 'Scikit-learn' },
+        ],
+    },
+    {
+        id: 'deep-learning',
+        title: 'Deep Learning',
+        leftTopics: [
+            { id: 'neural-networks', title: 'Neural Networks' },
+            { id: 'cnn', title: 'CNNs' },
+            { id: 'rnn', title: 'RNNs & LSTMs' },
+        ],
+        rightTopics: [
+            { id: 'transformers', title: 'Transformers' },
+            { id: 'pytorch', title: 'PyTorch' },
+            { id: 'tensorflow', title: 'TensorFlow / Keras' },
+        ],
+    },
+    {
+        id: 'nlp-section',
+        title: 'NLP',
+        description: 'Natural Language Processing',
+        leftTopics: [
+            { id: 'nlp', title: 'NLP Fundamentals' },
+        ],
+        rightTopics: [
+            { id: 'huggingface', title: 'Hugging Face' },
+        ],
+    },
+    {
+        id: 'cv-section',
+        title: 'Computer Vision',
+        rightTopics: [
+            { id: 'computer-vision', title: 'Computer Vision' },
+        ],
+    },
+    {
+        id: 'mlops',
+        title: 'MLOps',
+        description: 'Production ML',
+        leftTopics: [
+            { id: 'mlflow', title: 'MLflow' },
+            { id: 'wandb', title: 'Weights & Biases' },
+        ],
+        rightTopics: [
+            { id: 'model-deployment', title: 'Model Deployment' },
+        ],
+    },
+    {
+        id: 'cloud-bigdata',
+        title: 'Cloud & Big Data',
+        leftTopics: [
+            { id: 'cloud-ml', title: 'Cloud ML Platforms' },
+        ],
+        rightTopics: [
+            { id: 'spark', title: 'Apache Spark' },
+        ],
+    },
+];

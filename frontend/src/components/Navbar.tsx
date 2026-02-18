@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect, useRef, useSyncExternalStore } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useMemo, useEffect, useRef, useSyncExternalStore } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import './Navbar.css';
 
 // Custom hook to sync with localStorage
@@ -27,12 +27,44 @@ const useAuthState = () => {
 
 const Navbar = () => {
     const navigate = useNavigate();
-    const [active, setActive] = useState('Roadmaps');
+    const location = useLocation();
     const [showDropdown, setShowDropdown] = useState(false);
+    const [hidden, setHidden] = useState(false);
+    const lastScrollY = useRef(0);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     // Use sync external store for auth state
     const { isLoggedIn, userName } = useAuthState();
+
+    // Derive active nav link from current location (no effect needed)
+    const active = useMemo(() => {
+        const path = location.pathname;
+        const hash = location.hash;
+
+        if (path.startsWith('/problems')) return 'Problems';
+        if (path.startsWith('/mock-test')) return 'Mock Test';
+        if (path.startsWith('/companies')) return 'Companies';
+        if (path.startsWith('/roadmaps')) return 'Roadmaps';
+        if (path === '/' && hash === '#resources') return 'Resources';
+        if (path === '/') return 'Roadmaps';
+        return '';
+    }, [location.pathname, location.hash]);
+
+    // Hide navbar on scroll down, show on scroll up
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+            if (currentScrollY > lastScrollY.current && currentScrollY > 80) {
+                setHidden(true);
+            } else {
+                setHidden(false);
+            }
+            lastScrollY.current = currentScrollY;
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     // Close dropdown when clicking outside
     useEffect(() => {
@@ -56,8 +88,9 @@ const Navbar = () => {
     };
 
     const navLinks = [
-        { name: 'Roadmaps', href: '/#roadmaps' },
-        { name: 'Companies', href: '/#companies' },
+        { name: 'Roadmaps', href: '/roadmaps' },
+        { name: 'Problems', href: '/problems' },
+        { name: 'Companies', href: '/companies' },
         { name: 'Mock Test', href: '/mock-test' },
         { name: 'Resources', href: '/#resources' },
     ];
@@ -70,8 +103,8 @@ const Navbar = () => {
     return (
         <motion.nav
             initial={{ y: -100 }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            animate={{ y: hidden ? -100 : 0 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="navbar"
         >
             <div className="container navbar-container">
@@ -86,7 +119,6 @@ const Navbar = () => {
                             key={link.name}
                             href={link.href}
                             className={`nav-link ${active === link.name ? 'active' : ''}`}
-                            onClick={() => setActive(link.name)}
                         >
                             <span className="nav-text">{link.name}</span>
                             {active === link.name && (

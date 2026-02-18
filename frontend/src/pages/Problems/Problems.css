@@ -1,0 +1,476 @@
+/* Problems.css - Sidebar Layout */
+
+.problems-page-layout {
+    display: flex;
+    min-height: 100vh;
+    background: #1a1a1a;
+    color: #eff1f6bf;
+}
+
+/* Sidebar */
+.problems-sidebar {
+    width: 250px;
+    background: #1e1e1e;
+    border-right: 1px solid #333;
+    padding: 1.5rem 1rem;
+    overflow-y: auto;
+    position: sticky;
+    top: 60px;
+    /* Adjusted to sit nicely below header */
+    height: calc(100vh - 60px);
+    padding-top: 1rem;
+    /* Extra padding if needed */
+}
+
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.sidebar-header h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+}
+
+.clear-btn {
+    background: transparent;
+    border: none;
+    color: #ef4743;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+/* Filter Sections */
+.filter-section {
+    margin-bottom: 2rem;
+}
+
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 0.75rem;
+}
+
+.filter-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.filter-icon {
+    font-size: 0.7rem;
+    color: #666;
+}
+
+.filter-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.view-more-btn {
+    align-self: flex-start;
+    background: transparent;
+    border: none;
+    color: #00b8a3;
+    font-size: 0.8rem;
+    cursor: pointer;
+    padding: 0;
+    margin-top: 0.5rem;
+    font-weight: 500;
+}
+
+.view-more-btn:hover {
+    text-decoration: underline;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    padding-left: 1.5rem;
+    font-size: 0.85rem;
+    color: #ccc;
+    user-select: none;
+}
+
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 14px;
+    width: 14px;
+    background-color: #333;
+    border-radius: 3px;
+    border: 1px solid #444;
+}
+
+.checkbox-container:hover input~.checkmark {
+    background-color: #444;
+}
+
+.checkbox-container input:checked~.checkmark {
+    background-color: #00b8a3;
+    border-color: #00b8a3;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.checkbox-container input:checked~.checkmark:after {
+    display: block;
+}
+
+.checkbox-container .checkmark:after {
+    left: 4px;
+    top: 1px;
+    width: 3px;
+    height: 8px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.filter-count {
+    color: #666;
+    font-size: 0.75rem;
+    margin-left: 0.3rem;
+}
+
+/* Main Content */
+.problems-main-content {
+    flex: 1;
+    padding: 1.5rem 2rem;
+    padding-top: 8rem;
+    /* Keep header cleared */
+    overflow-y: auto;
+}
+
+/* Content Header (New) */
+.content-header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.page-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+}
+
+.header-controls {
+    display: flex;
+    gap: 0.5rem;
+    /* Tighter gap like reference */
+    align-items: center;
+}
+
+/* Search and Sort Buttons */
+.search-btn-wrapper,
+.sort-btn-wrapper {
+    position: relative;
+    background: transparent;
+    border: 1px solid #333;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding: 0 0.5rem;
+    height: 36px;
+    min-width: 100px;
+    background: #1a1a1a;
+}
+
+.search-btn-wrapper:hover,
+.sort-btn-wrapper:hover {
+    border-color: #555;
+    background: #202020;
+}
+
+.search-icon-btn {
+    color: #999;
+    font-size: 0.85rem;
+    margin-right: 0.5rem;
+}
+
+.search-input-btn {
+    background: transparent;
+    border: none;
+    color: #ccc;
+    font-size: 0.9rem;
+    outline: none;
+    width: 80px;
+    /* Small width, expands on focus if desired, keeps it button-like */
+}
+
+.search-input-btn::placeholder {
+    color: #999;
+}
+
+.sort-select-btn {
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    border: none;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    color: #ccc;
+    font-size: 0.9rem;
+    outline: none;
+    cursor: pointer;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    padding-right: 1.5rem;
+    border-radius: 4px;
+}
+
+/* Ensure options have dark background */
+.sort-select-btn option {
+    background-color: #1a1a1a;
+    color: #fff;
+    padding: 8px;
+}
+
+/* Progress Section */
+.progress-section {
+    margin-bottom: 2rem;
+}
+
+.progress-text {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 0.5rem;
+}
+
+.solved-count {
+    color: #fff;
+    font-weight: 600;
+}
+
+.solved-percent {
+    margin-left: 0.5rem;
+    color: #666;
+}
+
+.progress-track {
+    height: 4px;
+    background: #333;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: #00b8a3;
+    transition: width 0.3s ease;
+}
+
+
+/* Promo Banner */
+.promo-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ccff00;
+    /* Neon yellow/green from reference */
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    color: #000;
+}
+
+.promo-content {
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.promo-btn {
+    background: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+/* Table */
+.problems-table-container {
+    background: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table-header {
+    display: grid;
+    grid-template-columns: 50px 1fr 100px 100px;
+    padding: 1rem;
+    background: transparent;
+    border-bottom: 1px solid #333;
+    font-weight: 600;
+    color: #666;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.table-row {
+    display: grid;
+    grid-template-columns: 50px 1fr 100px 100px;
+    padding: 1rem;
+    border-bottom: 1px solid #2a2a2a;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.table-row:hover {
+    background: #262626;
+}
+
+.col-status {
+    display: flex;
+    justify-content: center;
+}
+
+.solved-icon {
+    color: #00b8a3;
+}
+
+.col-title {
+    font-weight: 500;
+    color: #e5e5e5;
+    font-size: 0.95rem;
+}
+
+.problem-link:hover {
+    color: #fff;
+}
+
+.premium-icon {
+    margin-left: 0.5rem;
+    color: #ffa116;
+    font-size: 0.8rem;
+}
+
+.col-acceptance {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.difficulty-badge {
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: capitalize;
+    color: #000 !important;
+    /* Force black text */
+}
+
+.difficulty-easy {
+    color: #00b8a3 !important;
+    background: rgba(0, 184, 163, 0.15);
+}
+
+.difficulty-medium {
+    color: #ffa116 !important;
+    background: rgba(255, 161, 22, 0.15);
+}
+
+.difficulty-hard {
+    color: #ef4743 !important;
+    background: rgba(239, 71, 67, 0.15);
+}
+
+/* Pagination */
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    gap: 1rem;
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.page-nav-btn {
+    background: #333;
+    border: none;
+    color: #ccc;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.page-nav-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Loading/Empty States */
+.loading-state,
+.empty-state {
+    padding: 3rem;
+    text-align: center;
+    color: #888;
+}
+
+/* Fix for mobile/tablet */
+@media (max-width: 900px) {
+    .problems-page-layout {
+        flex-direction: column;
+    }
+
+    .problems-sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+        border-right: none;
+        border-bottom: 1px solid #333;
+    }
+
+    .content-header-section {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .header-controls {
+        width: 100%;
+    }
+
+    .search-btn-wrapper,
+    .sort-btn-wrapper {
+        flex: 1;
+    }
+}
